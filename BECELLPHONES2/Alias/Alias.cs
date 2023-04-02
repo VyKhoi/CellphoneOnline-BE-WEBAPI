@@ -81,5 +81,18 @@ namespace BECELLPHONES2.Alias
     }
 
 
+    public class CommentPost
+    {
+        
+        public string ContentComment { get; set; } = null!;
+
+        public int IdProductId { get; set; }
+
+        public int IdUserId { get; set; }
+
+        public int? IdReply { get; set; }
+    }
+    
+
 
 }

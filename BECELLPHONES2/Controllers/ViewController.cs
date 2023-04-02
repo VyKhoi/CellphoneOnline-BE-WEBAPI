@@ -794,15 +794,27 @@ namespace BECELLPHONES2.Controllers
 
             var comments = context.CellphoneappComments
                   .Where(c => c.IdProductId == id_product)
+                  .Include(c => c.InverseIdReplyNavigation) // load các comment phản hồi
+                      .ThenInclude(r => r.IdUser) // load thông tin IdUser của các comment phản hồi
                   .Select(c => new
                   {
                       Id = c.Id,
                       userName = c.IdUser.UserName,
                       contentComment = c.ContentComment,
                       idUser = c.IdUser.Id,
-                      idProduct = c.IdProductId
+                      idProduct = c.IdProductId,
+                      commentReply = c.InverseIdReplyNavigation
+                          .Select(r => new
+                          {
+                              Id = r.Id,
+                              userName = r.IdUser.UserName,
+                              contentComment = r.ContentComment,
+                              idUser = r.IdUser.Id,
+                              idProduct = r.IdProductId,// lấy thông tin userName của các comment phản hồi
+                          })
                   })
                   .ToList();
+
 
             string json2 = JsonConvert.SerializeObject(comments);
             return Ok(json2);
@@ -1055,7 +1067,7 @@ namespace BECELLPHONES2.Controllers
 
 
         [HttpGet("home/branch/{branch_id}/search-price/{from_price}/{to_price}/{type_product}")]
-        public IActionResult SearchPrice(int branch_id, double from_price, double to_price, int type_product )
+        public IActionResult SearchPrice(int branch_id, double from_price, double to_price, int type_product)
         {
             string type = "";
             if (type_product == 1)
@@ -1285,7 +1297,7 @@ namespace BECELLPHONES2.Controllers
         }
 
 
-       // xử lý order
+        // xử lý order
         [HttpPost("home/checkout-succeed")]
         public IActionResult Order([FromBody] OrderRequest data)
         {
@@ -1384,10 +1396,10 @@ namespace BECELLPHONES2.Controllers
         [HttpPost("home/login")]
         public IActionResult Login([FromBody] UserCredentials data)
         {
-           
+
             string username = data.Username;
             string passwordUserInput = data.Password;
-          
+
             try
             {
                 var user = context.CellphoneappUsers.SingleOrDefault(u => u.UserName == username);
@@ -1400,7 +1412,7 @@ namespace BECELLPHONES2.Controllers
 
                 if (UserRegister.HashPassword(passwordUserInput).Equals(user.PassWord))
                 {
-                     var userDict = new Dictionary<string, object>
+                    var userDict = new Dictionary<string, object>
                         {
                             { "id", user.Id },
                             { "name", user.Name },
@@ -1431,7 +1443,7 @@ namespace BECELLPHONES2.Controllers
         }
 
 
-    
+
         [HttpPost("home/register")]
         public IActionResult SaveUser([FromBody] UserRegister userObject)
         {
@@ -1439,11 +1451,11 @@ namespace BECELLPHONES2.Controllers
             short gender_ = 0;
             if (user_dict.Gender == "female")
             {
-               gender_= 1;
+                gender_ = 1;
             }
             else
             {
-               gender_ = 0;
+                gender_ = 0;
             }
 
             var role = context.CellphoneappRoles.FirstOrDefault(x => x.NameRole == "customer");
@@ -1453,7 +1465,7 @@ namespace BECELLPHONES2.Controllers
                 return BadRequest(new { status = false, message = "Username hoặc số điện thoại hoặc email đã trùng, vui lòng thay đổi để hợp lệ" });
             }
 
-           
+
 
             //if (context.CellphoneappUsers.Any(u => u.Email == user_dict.Email))
             //{
@@ -1477,5 +1489,50 @@ namespace BECELLPHONES2.Controllers
 
             return Ok(user_dict);
         }
+
+        [HttpPost("home/comment/{idUser}/{idProduct}")]
+        public IActionResult Comment([FromBody] CommentPost comment)
+        {
+            
+            System.Diagnostics.Debug.WriteLine("nó có vào hàm post comment" + comment);
+            var cm = new CellphoneappComment()
+            {
+                ContentComment = comment.ContentComment,
+                IdProductId = comment.IdProductId,
+                IdUserId = comment.IdUserId,
+                IdReply = comment.IdReply
+            };
+
+            context.CellphoneappComments.Add(cm);
+            context.SaveChanges();
+
+            return Ok(cm);
+         
+        }
+
+
+
+        // xóa comment
+        [HttpDelete("home/delete/comment/{id}")]
+        public async Task<IActionResult> DeleteComment(int id)
+        {
+            var comment = await context.CellphoneappComments.FindAsync(id);
+            if (comment == null)
+            {
+                return NotFound();
+            }
+
+            // Xóa tất cả các comment reply của comment này
+            var replyComments = context.CellphoneappComments.Where(c => c.IdReply == comment.Id);
+            context.CellphoneappComments.RemoveRange(replyComments);
+
+            // Xóa comment này
+            context.CellphoneappComments.Remove(comment);
+
+            await context.SaveChangesAsync();
+
+            return NoContent();
+        }
+
     }
 }
