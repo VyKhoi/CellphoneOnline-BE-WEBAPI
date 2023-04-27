@@ -4348,25 +4348,27 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Vy Khoi\\.nuget\\packages\\": {}
+    "C:\\Users\\Admin\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Vy Khoi\\Desktop\\ASPCOREWEBAPI\\BECELLPHONES2\\BECELLPHONES2\\BECELLPHONES2.csproj",
+      "projectUniqueName": "C:\\Users\\Admin\\Desktop\\CEllBE\\CellphoneOnline-BE-WEBAPI\\BECELLPHONES2\\BECELLPHONES2.csproj",
       "projectName": "BECELLPHONES2",
-      "projectPath": "C:\\Users\\Vy Khoi\\Desktop\\ASPCOREWEBAPI\\BECELLPHONES2\\BECELLPHONES2\\BECELLPHONES2.csproj",
-      "packagesPath": "C:\\Users\\Vy Khoi\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Vy Khoi\\Desktop\\ASPCOREWEBAPI\\BECELLPHONES2\\BECELLPHONES2\\obj\\",
+      "projectPath": "C:\\Users\\Admin\\Desktop\\CEllBE\\CellphoneOnline-BE-WEBAPI\\BECELLPHONES2\\BECELLPHONES2.csproj",
+      "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Admin\\Desktop\\CEllBE\\CellphoneOnline-BE-WEBAPI\\BECELLPHONES2\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\Vy Khoi\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\DevExpress 19.2.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
         "net6.0"
       ],
       "sources": {
+        "C:\\Program Files (x86)\\DevExpress 19.2\\Components\\System\\Components\\Packages": {},
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
@@ -4448,7 +4450,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.102\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.203\\RuntimeIdentifierGraph.json"
       }
     }
   }

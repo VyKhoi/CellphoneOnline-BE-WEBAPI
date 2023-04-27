@@ -20,7 +20,7 @@ namespace BECELLPHONES2.Controllers
     public class ViewsController : ControllerBase
     {
         private readonly CellphonesContext context;
-        private readonly String connectionString = "Data Source=VYKHOI\\VYKHOI;Initial Catalog=cellphones;Integrated Security=True;TrustServerCertificate=True";
+        private readonly String connectionString = "Data Source=DESKTOP-U3MBKCB;Initial Catalog=cellphones;Integrated Security=True;TrustServerCertificate=True";
 
         public ViewsController(CellphonesContext ctx)
         {
