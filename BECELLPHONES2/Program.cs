@@ -15,7 +15,7 @@ StripeConfiguration.ApiKey = "sk_test_51Mm6CAJTSCX72rEN0osGovCVaSKimGjDCkJjqJmA4
 
 builder.Services.AddCors(p => p.AddPolicy("MyCors", builder =>
 {
-    builder.WithOrigins("http://localhost:3000")
+    builder.WithOrigins("http://localhost:3000", "http://localhost:3001")
         .AllowAnyMethod()
         .AllowAnyHeader()
         .AllowCredentials();
